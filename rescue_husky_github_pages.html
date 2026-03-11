@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rescue Husky & Friends ODV</title>
+  <style>
+    :root {
+      --bg-1: #0a0c10;
+      --bg-2: #0f1724;
+      --bg-3: #162030;
+      --card: rgba(255,255,255,0.06);
+      --card-border: rgba(255,255,255,0.08);
+      --text: #e5eef7;
+      --muted: #94a3b8;
+      --accent: #55d9f7;
+      --accent-dark: #0f2a36;
+      --white-soft: rgba(255,255,255,0.7);
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --radius: 24px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(85,217,247,0.08), transparent 22%),
+        radial-gradient(circle at bottom right, rgba(148,163,184,0.10), transparent 28%),
+        linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(7, 10, 16, 0.7);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 16px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, #6be6ff 0%, #36c9ea 100%);
+      color: #061018;
+      font-size: 20px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    .brand small {
+      display: block;
+      color: var(--accent);
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      font-size: 11px;
+      margin-bottom: 2px;
+    }
+
+    .brand strong { font-size: 16px; }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav a:hover { color: white; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      border-radius: 16px;
+      padding: 14px 22px;
+      font-weight: 700;
+      transition: .2s ease;
+      cursor: pointer;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: linear-gradient(180deg, #6be6ff 0%, #46d2f2 100%);
+      color: #09131b;
+    }
+    .btn-secondary {
+      border-color: rgba(255,255,255,0.16);
+      color: var(--text);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 760px;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 32%;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,12,16,0.94) 0%, rgba(10,12,16,0.72) 34%, rgba(15,23,42,0.45) 58%, rgba(255,255,255,0.04) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      min-height: 760px;
+      display: flex;
+      align-items: center;
+      padding: 96px 0 64px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .34em;
+      font-size: 12px;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    .hero h1 {
+      max-width: 760px;
+      font-size: clamp(42px, 7vw, 76px);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p.lead {
+      max-width: 640px;
+      margin-top: 22px;
+      font-size: 18px;
+      line-height: 1.8;
+      color: #d1d9e4;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .section {
+      padding: 100px 0;
+    }
+
+    .section-dark {
+      background: linear-gradient(180deg, rgba(17,24,39,0.48) 0%, rgba(15,23,42,0.68) 100%);
+    }
+
+    .section-heading {
+      max-width: 760px;
+      margin-bottom: 40px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.1;
+      margin-top: 12px;
+    }
+
+    .section-heading p {
+      margin-top: 16px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 17px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.025) 100%);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .card-image {
+      height: 220px;
+      width: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      background: #0d1620;
+    }
+
+    .card-body { padding: 24px; }
+
+    .meta {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 6px;
+    }
+
+    .text {
+      color: #d7dfeb;
+      line-height: 1.75;
+      margin-top: 14px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #b6f2ff;
+      border: 1px solid rgba(107,230,255,0.18);
+      background: rgba(107,230,255,0.08);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .support-band {
+      background: linear-gradient(180deg, rgba(8,145,178,0.78) 0%, rgba(14,116,144,0.82) 42%, rgba(17,24,39,0.94) 100%);
+    }
+
+    .support-grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 28px;
+    }
+
+    .support-card {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.10);
+      border-radius: 24px;
+      padding: 24px;
+      backdrop-filter: blur(10px);
+    }
+
+    .support-card p {
+      margin-top: 10px;
+      line-height: 1.8;
+      color: #eefcff;
+    }
+
+    .footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.12);
+      color: var(--muted);
+      text-align: center;
+      padding: 24px 16px;
+      font-size: 14px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(0,0,0,0.78);
+      z-index: 100;
+    }
+
+    .modal.open { display: flex; }
+
+    .modal-card {
+      width: min(860px, 100%);
+      max-height: 90vh;
+      overflow: auto;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(15,23,42,0.98) 0%, rgba(11,18,31,0.98) 100%);
+      box-shadow: var(--shadow);
+    }
+
+    .modal-image {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      object-position: center 35%;
+    }
+
+    .modal-body { padding: 28px; }
+    .modal-body h3 { font-size: 34px; }
+    .modal-body .muted { color: var(--muted); margin-top: 8px; }
+    .modal-body .copy { color: #d7dfeb; line-height: 1.85; margin-top: 18px; }
+    .modal-body .label { color: white; font-weight: 700; }
+    .modal-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+
+    @media (max-width: 900px) {
+      .nav { display: none; }
+      .grid-3, .support-grid { grid-template-columns: 1fr; }
+      .hero, .hero-content { min-height: 680px; }
+      .section { padding: 80px 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="brand-icon">🐺</div>
+        <div>
+          <small>ODV</small>
+          <strong>Rescue Husky &amp; Friends</strong>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#cani">Cani</a>
+        <a href="#emergenze">Emergenze</a>
+        <a href="#sostienici">Sostienici</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <img
+        class="hero-image"
+        src="https://images.unsplash.com/photo-1605568427561-40dd23c2acea?auto=format&fit=crop&w=1600&q=80"
+        alt="Husky nella neve"
+      />
+      <div class="hero-overlay"></div>
+
+      <div class="container hero-content">
+        <div>
+          <div class="eyebrow">Husky rescue</div>
+          <h1>Una seconda possibilità per ogni cane.</h1>
+          <p class="lead">
+            Recuperiamo husky e cani nordici in difficoltà e li accompagniamo verso una nuova vita
+            attraverso cure, recupero e adozioni responsabili.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#cani">Cani in adozione</a>
+            <a class="btn btn-secondary" href="#sostienici">Sostieni il rescue</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cani" class="section section-dark">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">Cani</div>
+          <h2>In cerca di casa</h2>
+          <p>Una selezione dei cani seguiti dal rescue, con schede chiare e immediate.</p>
+        </div>
+
+        <div class="grid grid-3">
+          <article class="card">
+            <img class="card-image" src="https://images.unsplash.com/photo-1605568427561-40dd23c2acea?auto=format&fit=crop&w=1200&q=80" alt="Basco" />
+            <div class="card-body">
+              <div class="card-top">
+                <div>
+                  <h3>Basco</h3>
+                  <div class="meta">Nato a giugno 2025</div>
+                </div>
+                <span class="badge">In adozione</span>
+              </div>
+              <p class="text">Incrocio Siberian Husky, maschio, taglia grande, microchippato e vaccinato.</p>
+              <div class="hero-actions" style="margin-top:20px;">
+                <button class="btn btn-primary" type="button" onclick="openDog('basco')">Leggi scheda</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img class="card-image" src="https://images.unsplash.com/photo-1605568427561-40dd23c2acea?auto=format&fit=crop&w=1200&q=80" alt="Thor" />
+            <div class="card-body">
+              <div class="card-top">
+                <div>
+                  <h3>Thor</h3>
+                  <div class="meta">5 anni</div>
+                </div>
+                <span class="badge">In valutazione</span>
+              </div>
+              <p class="text">Ha bisogno di una famiglia paziente e consapevole.</p>
+              <div class="hero-actions" style="margin-top:20px;">
+                <button class="btn btn-primary" type="button" onclick="openDog('thor')">Leggi scheda</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img class="card-image" src="https://images.unsplash.com/photo-1605568427561-40dd23c2acea?auto=format&fit=crop&w=1200&q=80" alt="Maya" />
+            <div class="card-body">
+              <div class="card-top">
+                <div>
+                  <h3>Maya</h3>
+                  <div class="meta">2 anni</div>
+                </div>
+                <span class="badge">In adozione</span>
+              </div>
+              <p class="text">Dolce e affettuosa, perfetta per chi vuole iniziare un percorso serio.</p>
+              <div class="hero-actions" style="margin-top:20px;">
+                <button class="btn btn-primary" type="button" onclick="openDog('maya')">Leggi scheda</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="emergenze" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">Emergenze</div>
+          <h2>Dove vanno le donazioni</h2>
+        </div>
+
+        <div class="grid grid-3">
+          <article class="card"><div class="card-body"><h3>Cure veterinarie</h3><p class="text">Visite, esami clinici, interventi e terapie.</p></div></article>
+          <article class="card"><div class="card-body"><h3>Stalli</h3><p class="text">Strutture e pensioni dove i cani recuperano sicurezza.</p></div></article>
+          <article class="card"><div class="card-body"><h3>Recupero comportamentale</h3><p class="text">Educazione e percorsi di fiducia.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="sostienici" class="section support-band">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">Sostienici</div>
+          <h2>Aiutaci a salvare altri cani</h2>
+          <p>Le donazioni sostengono cure veterinarie, stalli e recupero.</p>
+        </div>
+
+        <div class="support-grid">
+          <div class="support-card">
+            <strong>Bonifico</strong>
+            <p>Rescue Husky &amp; Friends ODV<br />IBAN: IT61 L030 6909 6061 0000 0181 716</p>
+          </div>
+          <div class="support-card">
+            <strong>5x1000</strong>
+            <p>Codice fiscale<br />94303920485</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="dogModal" class="modal" onclick="closeIfBackdrop(event)">
+    <div class="modal-card">
+      <img id="modalImage" class="modal-image" src="" alt="Scheda cane" />
+      <div class="modal-body">
+        <h3 id="modalName"></h3>
+        <div id="modalAge" class="muted"></div>
+        <p id="modalDescription" class="copy"></p>
+        <p id="modalFamily" class="copy"></p>
+        <p id="modalCompatibility" class="copy"></p>
+        <div class="modal-actions">
+          <a class="btn btn-primary" href="#">Richiedi adozione</a>
+          <button class="btn btn-secondary" type="button" onclick="closeDog()">Chiudi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    © 2026 Rescue Husky &amp; Friends ODV
+  </footer>
+
+  <script>
+    const dogs = {
+      basco: {
+        name: "Basco",
+        age: "Nato a giugno 2025",
+        image: "https://images.unsplash.com/photo-1605568427561-40dd23c2acea?auto=format&fit=crop&w=1600&q=80",
+        description: "Questo giovanissimo incrocio Siberian Husky dagli occhi dolci si chiama Basco ed è un cucciolone di circa 8/9 mesi. Arrivato insieme alla sorellina Bora, inizialmente è un po' riservato ma con un approccio rispettoso si apre in modo sincero e affettuoso. Ama il gioco comunicativo e quando entra in fiducia diventa molto partecipe e affettuoso. È attento, rispettoso e sensibile alle emozioni umane. Cane giovane, dolce ed equilibrato con grande potenziale di crescita.",
+        family: "Famiglia ideale: adatto sia ad appartamento con giusti sfoghi quotidiani sia a casa con giardino sicuro. Cerchiamo una famiglia consapevole che sappia che un cucciolo non è un peluche ma un compagno di avventure.",
+        compatibility: "Compatibilità: socializzato positivamente con cagnolone femmine. Da valutare con maschi e gatti."
+      },
+      thor: {
+        name: "Thor",
+        age: "5 anni",
+        image: "https://images.unsplash.com/photo-1605568427561-40dd23c2acea?auto=format&fit=crop&w=1600&q=80",
+        description: "Informazioni complete disponibili contattando il rescue.",
+        family: "",
+        compatibility: ""
+      },
+      maya: {
+        name: "Maya",
+        age: "2 anni",
+        image: "https://images.unsplash.com/photo-1605568427561-40dd23c2acea?auto=format&fit=crop&w=1600&q=80",
+        description: "Informazioni complete disponibili contattando il rescue.",
+        family: "",
+        compatibility: ""
+      }
+    };
+
+    function openDog(key) {
+      const dog = dogs[key];
+      document.getElementById('modalImage').src = dog.image;
+      document.getElementById('modalName').textContent = dog.name;
+      document.getElementById('modalAge').textContent = dog.age;
+      document.getElementById('modalDescription').textContent = dog.description;
+      document.getElementById('modalFamily').textContent = dog.family || '';
+      document.getElementById('modalCompatibility').textContent = dog.compatibility || '';
+      document.getElementById('dogModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDog() {
+      document.getElementById('dogModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function closeIfBackdrop(event) {
+      if (event.target.id === 'dogModal') closeDog();
+    }
+  </script>
+</body>
+</html>
